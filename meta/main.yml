@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Denis Khabarov
+  description: Base boostrap. (Install python, etc)
+  license: GPLv3
+  min_ansible_version: 1.4
+  platforms:
+  - name: Ubuntu
+  categories:
+  - development
+dependencies: []

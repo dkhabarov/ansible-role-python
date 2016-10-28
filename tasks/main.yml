@@ -1,0 +1,9 @@
+---
+
+- name: update apt cache
+  raw: apt-get update
+
+- name: install python & aptitude, when not found in PATH
+  raw: (which python && which aptitude) || apt-get install -yq python python-apt aptitude
+
+- setup:
