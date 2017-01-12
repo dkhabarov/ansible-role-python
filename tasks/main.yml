@@ -1,9 +1,12 @@
 ---
 
 - name: update apt cache
-  raw: apt-get update
+  raw: apt-get --version &> /dev/null && apt-get update || true
 
-- name: install python & aptitude, when not found in PATH
-  raw: (which python && which aptitude) || apt-get install -yq python python-apt aptitude
+- name: install python via apt-get when not found in PATH
+  raw: (python --version &> /dev/null && apt-get --version &> /dev/null) || apt-get -y install python python-apt || true
+
+- name: install python via dnf
+  raw: (python --version &> /dev/null && dnf --version &> /dev/null) || dnf install -y python2 python2-dnf libselinux-python || true
 
 - setup:
