@@ -1,4 +1,4 @@
-# ansible-role-base-bootstrap
+# ansible-role-python
 Устанавливает python, если того нету в системе. При базовом провижене роль должна отрабавать ранее всех остальных.
 
 requirements.yml:
