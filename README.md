@@ -4,8 +4,8 @@
 requirements.yml:
 ```yaml
 ---
-- src: https://github.com/dkhabarov/ansible-role-base-bootstrap.git
-  name: dkhabarov.ansible-role-base-bootstrap
+- src: https://github.com/dkhabarov/ansible-role-python.git
+  name: dkhabarov.ansible-role-python
 ```
 Установка:
 
@@ -22,7 +22,7 @@ ansible-galaxy install -r requirement.yml -f
   hosts: all
   gather_facts: False
   roles:
-    - dkhabarov.ansible-role-base-bootstrap
+    - dkhabarov.ansible-role-python
 ```
 
 provision!
