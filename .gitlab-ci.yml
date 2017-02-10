@@ -1,0 +1,75 @@
+variables:
+  ANSIBLE_REQUIREMENT_VERSION: "2.1.2.0"
+
+ubuntu:trusty:
+  image: ubuntu:trusty
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+  before_script:
+    - apt-get update
+    - apt-get -y install python-dev libyaml-dev libffi-dev python-pip libssl-dev
+  script:
+    - pip install ansible==$ANSIBLE_REQUIREMENT_VERSION
+
+ubuntu:xenial:
+  image: ubuntu:xenial
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+  before_script:
+    - apt-get update
+    - apt-get -y install python-dev libyaml-dev libffi-dev python-pip libssl-dev
+  script:
+    - pip install ansible==$ANSIBLE_REQUIREMENT_VERSION
+
+debian:jessie:
+  image: debian:jessie
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+  before_script:
+    - apt-get update
+    - apt-get -y install python-dev libyaml-dev libffi-dev python-pip libssl-dev
+    - echo "Bugfix https://github.com/pyca/cryptography/issues/2280" && pip install -U cffi
+  script:
+    - pip install ansible==$ANSIBLE_REQUIREMENT_VERSION
+    
+debian:wheezy:
+  image: debian:wheezy
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+  before_script:
+    - apt-get update
+    - apt-get -y install python-dev libyaml-dev libffi-dev python-pip libssl-dev
+  script:
+    - pip install ansible==$ANSIBLE_REQUIREMENT_VERSION
+
+
+centos:7:
+  image: centos:7 
+  before_script:
+    - yum -y update
+    - yum -y install epel-release
+    - yum makecache fast
+    - yum install -y python-devel libyaml-devel libffi-devel openssl-devel python2-pip gcc gcc-c++
+  script:
+    - pip install ansible==$ANSIBLE_REQUIREMENT_VERSION
+
+fedora:24:
+  image: fedora:24 
+  before_script:
+    - dnf -y update
+    - dnf install -y python-devel libyaml-devel libffi-devel openssl-devel python-pip gcc gcc-c++ redhat-rpm-config
+  script:
+    - pip install ansible==$ANSIBLE_REQUIREMENT_VERSION
+    
+fedora:25:
+  image: fedora:25
+  before_script:
+    - dnf update -y
+    - dnf install -y python-devel libyaml-devel libffi-devel openssl-devel python-pip gcc gcc-c++ redhat-rpm-config
+  script:
+    - pip install ansible==$ANSIBLE_REQUIREMENT_VERSION
+    
+after_script:
+    - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+    - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+    - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo -vvv"
